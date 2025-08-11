@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DynamoDB User Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f3f4f6; }
+    table { border-collapse: collapse; width: 90%; margin: 2rem auto; background: #fff; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #3b82f6; color: #fff; }
+    tr:nth-child(even) { background: #f9f9f9; }
+    h2 { text-align: center; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h2>CLIENT DATA</h2>
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Height</th>
+        <th>Weight</th>
+        <th>Goal</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+    async function fetchUsers() {
+      const res = await fetch('https://2cb4zwcbw5.execute-api.ap-south-1.amazonaws.com/dev/extract');
+      const users = await res.json();
+      const tbody = document.querySelector('#userTable tbody');
+      tbody.innerHTML = '';
+      users.forEach(user => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${user.userId || ''}</td>
+            <td>${user.name || ''}</td>
+            <td>${user.email || ''}</td>
+            <td>${user.age || ''}</td>
+            <td>${user.gender || ''}</td>
+            <td>${user.height || ''}</td>
+            <td>${user.weight || ''}</td>
+            <td>${user.goal || ''}</td>
+          </tr>
+        `;
+      });
+    }
+    fetchUsers();
+  </script>
+</body>
+</html>

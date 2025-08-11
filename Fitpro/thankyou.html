@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You | FitJourney Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url('https://images.unsplash.com/photo-1543300722-222718fd8509?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+    .thankyou-container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      color: #ffffff;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    p {
+      color: #f3f4f6;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 1.2rem;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.18);
+      background: rgba(255,255,255,0.18);
+      object-fit: cover;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    a {
+      color: #10b981;
+      text-decoration: underline;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="thankyou-container">
+    <img src="https://img.icons8.com/fluency/96/000000/dumbbell.png" alt="FitJourney Pro Logo" class="brand-logo" />
+    <h1>Thank You!</h1>
+    <p>Your request has been received.<br>
+    You will get your custom fitness plan on your email soon.</p>
+    <a href="index.html">Back to Home</a>
+  </div>
+</body>
+</html>

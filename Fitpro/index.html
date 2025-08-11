@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitJourney Pro</title>
+
+  <!-- Inter font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url('https://images.unsplash.com/photo-1543300722-222718fd8509?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 420px;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #f3f4f6;
+      font-size: 0.95rem;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      outline: none;
+      transition: border 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #e5e7eb;
+    }
+
+    input:focus, select:focus {
+      border-color: #3b82f6;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    select {
+      color: #ffffff;
+    }
+
+    option {
+      color: #111;
+    }
+
+    .two-col {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .two-col div {
+      flex: 1;
+    }
+
+    button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    .message {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #10b981;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+<h2>💪 Welcome to FitJourney Pro</h2>
+
+  <!-- Professional Supporting Text -->
+  <p style="text-align: center; color: #f3f4f6; margin-top: -0.75rem; margin-bottom: 1rem; font-size: 0.95rem;">
+    Achieve your fitness goals with a personalized plan designed just for you. Whether you're looking to bulk up or lean down, we’ve got you covered.
+  </p>
+
+  <form id="fitnessForm">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" placeholder="e.g. John Doe" required />
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" placeholder="e.g. john@example.com" required />
+
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" placeholder="e.g. 25" required />
+
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required>
+      <option value="" disabled selected>Select your gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <div class="two-col">
+      <div>
+        <label for="height">Height (cm)</label>
+        <input type="number" id="height" name="height" placeholder="e.g. 175" required />
+      </div>
+      <div>
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" name="weight" placeholder="e.g. 70" required />
+      </div>
+    </div>
+
+    <label for="goal">Fitness Goal</label>
+    <select id="goal" name="goal" required>
+      <option value="" disabled selected>Select your goal</option>
+      <option value="bulk">Build Muscle (Bulk)</option>
+      <option value="cut">Lose Fat (Cut)</option>
+    </select>
+
+    <button type="submit">Generate My Plan</button>
+    <p id="responseMessage" class="message"></p>
+
+    <!-- Light disclaimer -->
+    <p style="text-align: center; color: #d1d5db; font-size: 0.85rem; margin-top: 0.6rem;">
+      🔒 We respect your privacy. Your information is used only to create your plan and is never shared.
+    </p>
+  </form>
+</div>
+
+
+<script>
+  const form = document.getElementById('fitnessForm');
+  const responseMessage = document.getElementById('responseMessage');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: form.name.value,
+      email: form.email.value,
+      age: form.age.value,
+      gender: form.gender.value,
+      height: form.height.value,
+      weight: form.weight.value,
+      goal: form.goal.value
+    };
+
+    try {
+      const res = await fetch('https://ctao8x0i8a.execute-api.ap-south-1.amazonaws.com/dev/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        window.location.href = "thankyou.html";
+      } else {
+        responseMessage.textContent = '❌ Submission failed. Try again.';
+        responseMessage.style.color = '#ef4444';
+      }
+    } catch (error) {
+      responseMessage.textContent = '❌ Network error.';
+      responseMessage.style.color = '#ef4444';
+      console.error(error);
+    }
+  });
+</script>
+
+</body>
+</html>
