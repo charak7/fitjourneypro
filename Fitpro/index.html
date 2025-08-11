@@ -142,7 +142,7 @@
     <input type="email" id="email" name="email" placeholder="e.g. john@example.com" required />
 
     <label for="age">Age</label>
-    <input type="number" id="age" name="age" placeholder="e.g. 25" required />
+    <input type="number" id="age" name="age" placeholder="e.g. 25" required min="13" max="120" />
 
     <label for="gender">Gender</label>
     <select id="gender" name="gender" required>
@@ -154,11 +154,11 @@
     <div class="two-col">
       <div>
         <label for="height">Height (cm)</label>
-        <input type="number" id="height" name="height" placeholder="e.g. 175" required />
+        <input type="number" id="height" name="height" placeholder="e.g. 175" required min="50" max="300" />
       </div>
       <div>
         <label for="weight">Weight (kg)</label>
-        <input type="number" id="weight" name="weight" placeholder="e.g. 70" required />
+        <input type="number" id="weight" name="weight" placeholder="e.g. 70" required min="20" max="400" step="0.1" />
       </div>
     </div>
 
@@ -183,19 +183,47 @@
 <script>
   const form = document.getElementById('fitnessForm');
   const responseMessage = document.getElementById('responseMessage');
+  const submitButton = form.querySelector('button[type="submit"]');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    responseMessage.textContent = '';
+    responseMessage.style.color = '#10b981';
+
+    const age = Number(form.age.value);
+    const height = Number(form.height.value);
+    const weight = Number(form.weight.value);
+
+    if (!Number.isFinite(age) || age < 13 || age > 120) {
+      responseMessage.textContent = 'Please enter a valid age between 13 and 120.';
+      responseMessage.style.color = '#ef4444';
+      return;
+    }
+    if (!Number.isFinite(height) || height < 50 || height > 300) {
+      responseMessage.textContent = 'Please enter a valid height between 50 and 300 cm.';
+      responseMessage.style.color = '#ef4444';
+      return;
+    }
+    if (!Number.isFinite(weight) || weight < 20 || weight > 400) {
+      responseMessage.textContent = 'Please enter a valid weight between 20 and 400 kg.';
+      responseMessage.style.color = '#ef4444';
+      return;
+    }
+
     const formData = {
-      name: form.name.value,
-      email: form.email.value,
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
       age: form.age.value,
       gender: form.gender.value,
       height: form.height.value,
       weight: form.weight.value,
       goal: form.goal.value
     };
+
+    submitButton.disabled = true;
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = 'Submitting...';
 
     try {
       const res = await fetch('https://ctao8x0i8a.execute-api.ap-south-1.amazonaws.com/dev/submit', {
@@ -205,15 +233,19 @@
       });
 
       if (res.ok) {
-        window.location.href = "thankyou.html";
+        window.location.href = 'thankyou.html';
       } else {
         responseMessage.textContent = '❌ Submission failed. Try again.';
         responseMessage.style.color = '#ef4444';
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
       }
     } catch (error) {
       responseMessage.textContent = '❌ Network error.';
       responseMessage.style.color = '#ef4444';
       console.error(error);
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
     }
   });
 </script>
