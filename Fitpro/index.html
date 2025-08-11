@@ -226,22 +226,13 @@
     submitButton.textContent = 'Submitting...';
 
     try {
-      const res = await fetch('https://ctao8x0i8a.execute-api.ap-south-1.amazonaws.com/dev/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      if (res.ok) {
-        window.location.href = 'thankyou.html';
-      } else {
-        responseMessage.textContent = '❌ Submission failed. Try again.';
-        responseMessage.style.color = '#ef4444';
-        submitButton.disabled = false;
-        submitButton.textContent = originalButtonText;
-      }
+      // No external API call; simulate success
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Optionally persist locally for demo-only purposes
+      try { localStorage.setItem('fitjourney_last_submission', JSON.stringify(formData)); } catch {}
+      window.location.href = 'thankyou.html';
     } catch (error) {
-      responseMessage.textContent = '❌ Network error.';
+      responseMessage.textContent = 'Unexpected error.';
       responseMessage.style.color = '#ef4444';
       console.error(error);
       submitButton.disabled = false;
